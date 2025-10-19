@@ -1,45 +1,25 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Stack } from 'expo-router';
+import React from 'react';
 import LogIn from '../app/_layout';
 import Home from '../app/home/activityDetail';
 import Input from '../app/input/InputClass';
-import Leaderboard from '../app/leaderboard/leaderboard';
+import Leader from '../app/leaderboard/leaderboard';
 import Profile from '../app/profile/profile';
 
 
-const screens = {
-    LogIn: {
-        screen: LogIn
-    },
-    Home: {
-        screen: Home
-    }, 
-    Input: {
-        screen: Input
-    },
-    Leaderboard: {
-        screen: Leaderboard
-    },
-    Profile: {
-        screen: Profile
-    }
-}
+const Stack = createNativeStackNavigator();
 
-const HomeStack = createNativeStackNavigator();
-
-const App = () => {
+export default function App() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="LogIn" component={LogIn} />
-                <Stack.Screen name="Home" component={Home} />
-                <Stack.Screen name="Input" component={Input} />
-                <Stack.Screen name="Leaderboard" component={Leaderboard} />
-                <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen component={LogIn} name="LogIn"/>
+                <Stack.Screen component={Home} name="Home"/>
+                <Stack.Screen component={Input} name="Input"/>
+                <Stack.Screen component={Leader} name="Leader"/>
+                <Stack.Screen component={Profile} name="Profile"/>
             </Stack.Navigator>
         </NavigationContainer>
     );
 }
-
-// export default createAppContainer(HomeStack);
