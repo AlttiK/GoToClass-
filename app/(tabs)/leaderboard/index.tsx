@@ -18,6 +18,18 @@ const styles = StyleSheet.create({
     buttonStyle: {
         flexDirection: 'row',
         justifyContent: 'space-around',
+    }, 
+    header: {
+        fontSize: 24,
+        color: '#321d42',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 10,
+    }, 
+    subHeader: {
+        fontSize: 20,
+        color: '#321d42',
+        textAlign: 'center',
     }
 });
 
@@ -162,8 +174,8 @@ export default function Index() {
     return (
         <View>
             
-            <Text>Leaderboard</Text>
-            {groupName && <Text>{groupName}</Text>}
+            <Text style={styles.header}>Leaderboard</Text>
+            {groupName && <Text style={styles.subHeader}>{groupName}</Text>}
 
             {members.length === 0 ? (
                 <View>

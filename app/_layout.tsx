@@ -10,9 +10,6 @@ export default function RootLayout() {
 
   useEffect(() => {
     const sub = auth().onAuthStateChanged(user => {
-      console.log('🔥 Auth changed:', !!user);
-      console.log(user);
-      console.log('📍 Current segments:', segments);
       if (user) {
         if (!segments.some(s => s === '(tabs)')) {
           router.replace('/(tabs)/input');

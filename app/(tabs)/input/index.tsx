@@ -3,7 +3,7 @@ import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { Picker } from '@react-native-picker/picker';
 import React, { useState } from 'react';
-import { Alert, Button, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
 const styles= StyleSheet.create({
@@ -14,10 +14,18 @@ const styles= StyleSheet.create({
     flex:1,
     padding:25,
   },
-  buttonStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-}
+  button: {
+    backgroundColor: '#0454F1',
+    height: 40,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#cadafa',
+    textAlign: 'center', 
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 6,
+  }
   
 });
 
@@ -99,9 +107,13 @@ export default function Index({ navigation }: any, user: any) {
             <Text>
                 {time} hours
             </Text>
-            <Button
+            {/* <Button
                 title="Submit"
-                onPress={submitPress}/>
+                onPress={submitPress}
+                /> */}
+            <TouchableOpacity style={styles.button} onPress={submitPress}>
+                <Text style={styles.buttonText}>Submit</Text>
+            </TouchableOpacity>
 
             {/* <View style={styles.buttonStyle}>
                 <Button title="Home" onPress={() => navigation.navigate('Home')}/>
