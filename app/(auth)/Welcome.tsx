@@ -10,7 +10,7 @@ const styles= StyleSheet.create({
   },
 });
 
-export default function Index() {
+export default function Welcome({ navigation }: any ) {
     const [isLoginModalVisible, setIsLoginModalVisible] = React.useState(false);
     const [isCreateLoginModalVisible, setIsCreateLoginModalVisible] = React.useState(false);
     const toggleLoginModal = () => {
@@ -32,7 +32,7 @@ export default function Index() {
               onPress={toggleCreateLoginModel}/>
             <Modal isVisible={isLoginModalVisible}>
               <View>
-                <LoginScreen navigation={undefined}/>
+                <LoginScreen/>
                 <View>
                   <Button title="Close" onPress={toggleLoginModal} />
                 </View>
@@ -40,7 +40,7 @@ export default function Index() {
             </Modal>
             <Modal isVisible={isCreateLoginModalVisible}>
               <View>
-                <CreateAccount navigation={undefined}/>
+                <CreateAccount/>
                 <View>
                   <Button title="Close" onPress={toggleCreateLoginModel} />
                 </View>

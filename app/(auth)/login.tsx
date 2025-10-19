@@ -1,10 +1,11 @@
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Button, TextInput, View } from 'react-native';
 
-
-const LoginScreen = ({ navigation }: {navigation: any}) => {
+const LoginScreen = () => {
+    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -21,13 +22,10 @@ const LoginScreen = ({ navigation }: {navigation: any}) => {
             const profile = snap.val() || {};
             const groupId = profile.groupId ?? null;
             const groupName = profile.groupName ?? null;
-            navigation.reset({ 
-                index: 0, 
-                routes: [{ name: 'Home', params: { 
-                    uid, 
-                    groupId, 
-                    groupName 
-                }}] 
+            
+            router.replace({
+                pathname: "/(tabs)/home/Home",
+                params: { uid, groupId, groupName }
             });
         } catch (e: any) {
         const code = e?.code || '';

@@ -10,12 +10,14 @@ import {
     TextInput,
     View
 } from 'react-native';
+import { useRouter } from 'expo-router';
 
 const generateJoinCode = () => {
     return Math.random().toString(36).substring(4, 10).toUpperCase();
 }
 
-export default function CreateAccount({ navigation }: {navigation: any}) {
+export default function CreateAccount() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -118,20 +120,20 @@ export default function CreateAccount({ navigation }: {navigation: any}) {
         let finalJoinCode: string | undefined;
 
         if (groupName) {
-            const { groupId, code } = await createGroupInDatabase(uid);
-            finalGroupId = groupId;
-            finalGroupName = groupName;
-            finalJoinCode = code;
+          const { groupId, code } = await createGroupInDatabase(uid);
+          finalGroupId = groupId;
+          finalGroupName = groupName;
+          finalJoinCode = code;
         } else if (joinCode) {
-            const res = await joinGroupInDatabase(uid, joinCode.trim().toUpperCase());
-            if (!res) {
-            setError('Join code not found.');
-            await createProfile(uid, emailTrim);
-            return;
-            }
-            finalGroupId = res.groupId;
-            finalGroupName = res.groupName ?? undefined;
-            finalJoinCode = joinCode.trim().toUpperCase();
+          const res = await joinGroupInDatabase(uid, joinCode.trim().toUpperCase());
+          if (!res) {
+          setError('Join code not found.');
+          await createProfile(uid, emailTrim);
+          return;
+          }
+          finalGroupId = res.groupId;
+          finalGroupName = res.groupName ?? undefined;
+          finalJoinCode = joinCode.trim().toUpperCase();
         }
 
         await createProfile(uid, emailTrim);
@@ -143,10 +145,10 @@ export default function CreateAccount({ navigation }: {navigation: any}) {
         setJoinCode('');
         Alert.alert('Success', 'Account created.');
 
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Home', params: { uid, groupId: finalGroupId, groupName: finalGroupName } }]
-        });
+        router.replace({
+          pathname: '/tabs/home',
+          params: { uid, groupId: finalGroupId, groupName: finalGroupName }
+      });
     } 
     catch (error: any) {
         const code = error?.code || '';

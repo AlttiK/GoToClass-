@@ -1,19 +1,13 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from 'react-native';
 
-export default function Index({ navigation, route }: { navigation: any; route: any }) {
-    const params = route?.params ?? {};
-    const uid = params.uid ?? null;
-    const groupId = params.groupId ?? null;
-    const groupName = params.groupName ?? null;
 
+
+export default function Index(navigation: any) {
     return (
         <View>
-            <Text>Signed in uid: {uid ?? 'N/A'}</Text>
-            <Text>Group: {groupName ?? groupId ?? 'None'}</Text>
-            <Text>Accomplishments:</Text>
-            
-            
+            <Text>Leaderboard</Text>
+
 
             <View style={styles.buttonStyle}>
                 <Button title="Home" onPress={() => navigation.navigate('Home')}/>

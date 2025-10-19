@@ -20,7 +20,7 @@ const styles= StyleSheet.create({
 });
 
 
-export default function Index(navigation: any) {
+export default function Index({ navigation }: any) {
     const [activity, setActivity] = useState('Class');
     const [time, setTime] = useState(0);
     const [log, setLog] = useState<string[]>([]);
