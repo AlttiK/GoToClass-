@@ -3,7 +3,7 @@ import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const styles= StyleSheet.create({
   center:{
@@ -14,10 +14,6 @@ const styles= StyleSheet.create({
     height: 50,
     backgroundColor: '#cadafa', 
     borderRadius: 5,
-  },
-  container:{
-    flex:1,
-    padding:25,
   },
   button: {
     marginTop: 5,
@@ -39,11 +35,8 @@ const styles= StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
 }, 
-component: {
-    marginTop: 2,
-},
-slider: {
-    height: 2
+medSpacer: {
+    marginTop: 20,
 }, 
 spacer: {
     marginTop: 5,
@@ -60,12 +53,21 @@ smallbox: {
 tiny: {
     fontSize: 12,
     color: '0a1e45',
-}
+},
+ground: {
+    flex: 1,
+    padding: 25,
+    backgroundColor: '#e3fafc', 
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    
+  }
   
 });
 
 
-export default function Index({ navigation }: any, user: any) {
+
+export default function Index({ navigation }: any) {
     const [activity, setActivity] = useState('Class');
     const [time, setTime] = useState(0);
     const [log, setLog] = useState<string[]>([]);
@@ -87,7 +89,13 @@ export default function Index({ navigation }: any, user: any) {
             Alert.alert('Error', 'Please set a time greater than 0');
             return;
         }
-        const pointsToAdd = time/2;
+        let pointsToAdd = time*6;
+        if (activity === "Studying") {
+            pointsToAdd = Math.trunc(pointsToAdd/4);
+        }
+        else {
+            pointsToAdd = Math.trunc(pointsToAdd/3);
+        }
         // setPointsEarned(pointsToAdd);
         const newEntry = `Activity: ${activity}, Time Spent: ${time} hours, Points Earned: ${pointsToAdd}`;
         setPoints(points + pointsToAdd);
@@ -116,9 +124,9 @@ export default function Index({ navigation }: any, user: any) {
 
     };
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.ground}>
             <Text style={styles.header}>Input log</Text>
-            <Text style={styles.container}>
+            <Text style={styles.medSpacer}>
                 Choose the activity you participated in:
             </Text>
             <Picker
@@ -128,11 +136,11 @@ export default function Index({ navigation }: any, user: any) {
                 <Picker.Item label="Class" value="Class"/>
                 <Picker.Item label="Studying" value="Studying"/>
             </Picker>
-            <Text style={styles.container}>
+            <Text style={styles.medSpacer}>
                 How much time did you spend? 
             </Text>
             <Slider
-                style={styles.slider}
+                style={styles.spacer}
                 step={0.25}
                 minimumValue={0}
                 maximumValue={12}
@@ -152,7 +160,7 @@ export default function Index({ navigation }: any, user: any) {
             <TouchableOpacity style={styles.button} onPress={submitPress}>
                 <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
-            <Text style={styles.container}>
+            <Text style={styles.medSpacer}>
                 Completed:
             </Text>
             {log.map((entry, index) => (
@@ -160,14 +168,14 @@ export default function Index({ navigation }: any, user: any) {
                     <Text style={styles.tiny}>{entry}</Text>
                 </View>
             ))}
-
+            
             {/* <View style={styles.buttonStyle}>
                 <Button title="Home" onPress={() => navigation.navigate('Home')}/>
                 <Button title="Input" onPress={() => navigation.navigate('Input')}/>
                 <Button title="Leaderboard" onPress={() => navigation.navigate('Leader')}/>
                 <Button title="Profile" onPress={() => navigation.navigate('Profile')}/>
             </View> */}
-        </View>
+        </ScrollView>
     );
 
     // let onPressReturn = (

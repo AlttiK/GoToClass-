@@ -26,6 +26,9 @@ export default function Index() {
     container: {
       flex: 1,
       padding: 25,
+      backgroundColor: '#e3fafc', 
+      // justifyContent: 'center',
+      // alignItems: 'center',
     },
     button: {
         backgroundColor: '#ffd70d',
@@ -218,7 +221,7 @@ export default function Index() {
       const foundGroup = groupData[foundGroupId];
 
       if (groupId) {
-        await database().ref(`groups/${groupId}/members/${user.uid}`).remove();
+      await database().ref(`groups/${groupId}/members/${user.uid}`).remove();
       }
 
       await database().ref(`groups/${foundGroupId}/members/${user.uid}`).set(true);
@@ -329,9 +332,9 @@ export default function Index() {
       }
 
       if (groupId) {
-        await database().ref(`groups/${groupId}/members/${user.uid}`).remove();
+      await database().ref(`groups/${groupId}/members/${user.uid}`).remove();
       }
-
+      
       await newGroupRef.set({
         name: newGroupNameInput.trim(),
         joinCode: newJoinCode,

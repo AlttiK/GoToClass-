@@ -1,14 +1,32 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Modal from 'react-native-modal';
 import CreateAccount from './createAccount';
 import LoginScreen from './login';
 
 
 const styles= StyleSheet.create({
-  center:{
-    alignItems: 'center',
+  
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  }, 
+  buttons: {
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#39803f',
   },
+  background: {
+    flex: 1,
+    backgroundColor: '#e3fafc', 
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+  }
+
+
 });
 
 export default function Index() {
@@ -22,15 +40,20 @@ export default function Index() {
     }
 
     return (
-        <View style={[styles.center, {top: 100}]}>
-            <Text> Welcome to Go To Class! </Text>
-
-            <Button
-              title="Log in"
-              onPress={toggleLoginModal}/>
-            <Button
+        <View style={styles.background}>
+            <Text style={styles.header}> Go To Class! </Text>
+              {/* <Button
+                title="Log in"
+                onPress={toggleLoginModal}/> */}
+            <TouchableOpacity style={styles.buttons} onPress={toggleLoginModal}>
+              <Text>Log in</Text>
+            </TouchableOpacity>
+            {/* <Button
               title="Create account"
-              onPress={toggleCreateLoginModel}/>
+              onPress={toggleCreateLoginModel}/> */}
+              <TouchableOpacity style={styles.buttons} onPress={toggleCreateLoginModel}>
+                <Text>Create account</Text>
+              </TouchableOpacity>
             <Modal isVisible={isLoginModalVisible}>
               <View>
                 <LoginScreen/>

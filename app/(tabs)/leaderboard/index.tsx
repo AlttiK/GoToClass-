@@ -30,7 +30,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#321d42',
         textAlign: 'center',
-    }
+    },
+    background: {
+        flex: 1,
+        backgroundColor: '#e3fafc', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        
+      }
 });
 
 interface MemberData {
@@ -172,7 +179,7 @@ export default function Index() {
     };
 
     return (
-        <View>
+        <View style={styles.background}>
             
             <Text style={styles.header}>Leaderboard</Text>
             {groupName && <Text style={styles.subHeader}>{groupName}</Text>}
