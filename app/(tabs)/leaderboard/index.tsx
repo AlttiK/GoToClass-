@@ -1,8 +1,6 @@
 import database from '@react-native-firebase/database';
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-
-
+import { StyleSheet, Text, View } from 'react-native';
 
 
 
@@ -33,41 +31,41 @@ export default function Index(navigation: any, user: any) {
     };
 
     const organizeMembersByPoints = () => {
-        
+        let membersArray = members;
+        for (let i: number = 0; i < membersArray.length; i++) {
+            let smallestPoints = membersArray[i].points;
+            let smallestMember = membersArray[i];
+            for (let j: number = membersArray.length - (membersArray.length - i); j > 0; j++) {
+                if (membersArray[j].points < smallestPoints) {
+                    smallestPoints = membersArray[j].points;
+                    smallestMember = membersArray[j];
+                }   
+            }
+            members[i] = smallestMember;
+        }
     };
 
-    // useEffect(() => {
-    //     const fetchUserData = async () => {
-    //         try {
-    //             const response = await fetch('https://api.example.com/userdata');
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             const data = await response.json();
-    //             setUserData(data);
-    //         } catch (error) {
-    //             console.error('Error fetching user data:', error);
-    //         }
-    //     };
-    
-    // }
-    
-    // )
+    const prepared: any[] = [];
 
+    const listOfMembers = () => {
+        for (let i: number = 0; i < members.length; i++) {
+            prepared.push(<Text>{i}. {members[i].name} with {members[i].points} points</Text>)
+        }
 
+    };
 
 
     return (
         <View>
             <Text>Leaderboard</Text>
-            
+            {prepared}
 
-            <View style={styles.buttonStyle}>
+            {/* <View style={styles.buttonStyle}>
                 <Button title="Home" onPress={() => navigation.navigate('Home')}/>
                 <Button title="Input" onPress={() => navigation.navigate('Input')}/>
                 <Button title="Leaderboard" onPress={() => navigation.navigate('Leader')}/>
                 <Button title="Profile" onPress={() => navigation.navigate('Profile')}/>
-            </View>
+            </View> */}
         </View>
     );
 }

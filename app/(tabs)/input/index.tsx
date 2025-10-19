@@ -1,4 +1,5 @@
 import Slider from '@react-native-community/slider';
+import database from '@react-native-firebase/database';
 import { Picker } from '@react-native-picker/picker';
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from "react-native";
@@ -20,15 +21,37 @@ const styles= StyleSheet.create({
 });
 
 
-export default function Index({ navigation }: any) {
+export default function Index({ navigation }: any, user: any) {
     const [activity, setActivity] = useState('Class');
     const [time, setTime] = useState(0);
     const [log, setLog] = useState<string[]>([]);
     const [points, setPoints] = useState(0);
-    const submitPress = () => {
+
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    const submitPress = async () => {
         const newEntry = `Activity: ${activity}, Time Spent: ${time} hours, Points Earned: ${points}`;
         setLog((prevLog) => [...prevLog, newEntry]);
         setPoints((prevPoints) => prevPoints + 1);
+
+        // get the user's points, then update with new points
+        setError(null);
+        setLoading(true);
+        try {
+            const snap = await database().ref(`users/${user}`).once('value');
+            const profile = snap.val() || {};
+            const currentPoints = profile.points || 0;
+            await database().ref(`users/${user}`).update({points: points + 1});
+        }
+        catch(e) {
+            setError('Failed to submit activity. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+
+        // await database().ref(`users/${user}`).update({points: points + 1});
+
     };
     return (
         <View style={styles.container}>
@@ -65,12 +88,12 @@ export default function Index({ navigation }: any) {
                 title="Submit"
                 onPress={submitPress}/>
 
-            <View style={styles.buttonStyle}>
+            {/* <View style={styles.buttonStyle}>
                 <Button title="Home" onPress={() => navigation.navigate('Home')}/>
                 <Button title="Input" onPress={() => navigation.navigate('Input')}/>
                 <Button title="Leaderboard" onPress={() => navigation.navigate('Leader')}/>
                 <Button title="Profile" onPress={() => navigation.navigate('Profile')}/>
-            </View>
+            </View> */}
         </View>
     );
 

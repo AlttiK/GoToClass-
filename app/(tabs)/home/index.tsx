@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function Index({ navigation, route }: any) {
     const params = route?.params ?? {};
@@ -15,12 +15,12 @@ export default function Index({ navigation, route }: any) {
             
             
 
-            <View style={styles.buttonStyle}>
+            {/* <View style={styles.buttonStyle}>
                 <Button title="Home" onPress={() => navigation.navigate('Home')}/>
                 <Button title="Input" onPress={() => navigation.navigate('Input')}/>
                 <Button title="Leaderboard" onPress={() => navigation.navigate('Leader')}/>
                 <Button title="Profile" onPress={() => navigation.navigate('Profile')}/>
-            </View>
+            </View> */}
         </View>
     );
 }

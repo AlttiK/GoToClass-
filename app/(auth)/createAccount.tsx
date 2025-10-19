@@ -19,6 +19,7 @@ const generateJoinCode = () => {
 export default function CreateAccount() {
   const router = useRouter();
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -26,8 +27,9 @@ export default function CreateAccount() {
   const [groupName, setGroupName] = useState('');
   const [joinCode, setJoinCode] = useState('');
 
-  const createProfile = async (uid: string, emailValue: string, groupId?: string, group?: string, code?: string, points?: number) => {
+  const createProfile = async (uid: string, nameValue: string, emailValue: string, groupId?: string, group?: string, code?: string, points?: number) => {
     const update: any = {
+        name: nameValue,
         email: emailValue,
         createdAt: database.ServerValue.TIMESTAMP,
         points: 0,
@@ -41,6 +43,7 @@ export default function CreateAccount() {
     await database()
       .ref(`users/${uid}`)
       .set({
+        name: nameValue,
         email: emailValue,
         createdAt: database.ServerValue.TIMESTAMP,
         points: 0,
@@ -69,7 +72,7 @@ export default function CreateAccount() {
     return { groupId, code };
   }
 
-  const joinGroupInDatabase = async (ownerUid: string, code: string) => {
+  const joinGroupInDatabase = async (uid: string, code: string) => {
     const group = await database().ref('groups').orderByChild('joinCode').equalTo(code).once('value');
     if (!group.exists()) {
         return null;
@@ -83,7 +86,7 @@ export default function CreateAccount() {
       return true
     });
     if (!foundId) return null;
-    await database().ref(`groups/${foundId}/members/${ownerUid}`).set(true);
+    await database().ref(`groups/${foundId}/members/${uid}`).set(true);
     return { groupId: foundId, groupName: foundName };
   };
 
@@ -130,16 +133,15 @@ export default function CreateAccount() {
         } else if (joinCode) {
           const res = await joinGroupInDatabase(uid, joinCode.trim().toUpperCase());
           if (!res) {
-          setError('Join code not found.');
-          await createProfile(uid, emailTrim);
-          return;
+            setError('Join code not found.');
+            return;
           }
           finalGroupId = res.groupId;
           finalGroupName = res.groupName ?? undefined;
           finalJoinCode = joinCode.trim().toUpperCase();
         }
 
-        await createProfile(uid, emailTrim);
+        await createProfile(uid, name, emailTrim, finalGroupId, finalGroupName, finalJoinCode);
 
         setEmail('');
         setPassword('');
@@ -168,7 +170,14 @@ export default function CreateAccount() {
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder="Username or email"
+        placeholder="Name"
+        value={name}
+        onChangeText={setName}
+        style={styles.input}
+        autoCapitalize="none"
+      />
+      <TextInput
+        placeholder="Email"
         value={email}
         onChangeText={setEmail}
         style={styles.input}

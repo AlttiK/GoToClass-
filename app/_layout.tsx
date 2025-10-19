@@ -5,14 +5,17 @@ import { ActivityIndicator, View } from 'react-native';
 
 export default function RootLayout() {
   const router = useRouter();
-  const segments = useSegments(); // e.g. ['(auth)','login'] or ['(tabs)','home']
+  const segments = useSegments();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const sub = auth().onAuthStateChanged(user => {
+      console.log('🔥 Auth changed:', !!user);
+      console.log(user);
+      console.log('📍 Current segments:', segments);
       if (user) {
         if (!segments.some(s => s === '(tabs)')) {
-          router.replace('/(tabs)/home');
+          router.replace('/(tabs)/input');
         }
       } else {
         if (!segments.some(s => s === '(auth)')) {
@@ -23,6 +26,7 @@ export default function RootLayout() {
     });
     return () => sub();
   }, [segments, router]);
+
 
   if (!ready) {
     return (
