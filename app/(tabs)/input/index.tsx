@@ -1,8 +1,9 @@
 import Slider from '@react-native-community/slider';
+import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { Picker } from '@react-native-picker/picker';
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Alert, Button, StyleSheet, Text, View } from "react-native";
 
 
 const styles= StyleSheet.create({
@@ -26,29 +27,43 @@ export default function Index({ navigation }: any, user: any) {
     const [time, setTime] = useState(0);
     const [log, setLog] = useState<string[]>([]);
     const [points, setPoints] = useState(0);
-
+    // const [pointsEarned, setPointsEarned] = useState(0);
+    const [uid, setUid] = useState<string | null>(null); 
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
     const submitPress = async () => {
-        const newEntry = `Activity: ${activity}, Time Spent: ${time} hours, Points Earned: ${points}`;
+        user = auth().currentUser;
+        setUid(user.uid);
+
+        if(time === 0) {
+            Alert.alert('Error', 'Please set a time greater than 0');
+            return;
+        }
+        const pointsToAdd = time/2;
+        // setPointsEarned(pointsToAdd);
+        const newEntry = `Activity: ${activity}, Time Spent: ${time} hours, Points Earned: ${pointsToAdd}`;
+        setPoints(points + pointsToAdd);
         setLog((prevLog) => [...prevLog, newEntry]);
-        setPoints((prevPoints) => prevPoints + 1);
+        // setPoints((points) => points + 1);
 
         // get the user's points, then update with new points
         setError(null);
         setLoading(true);
         try {
-            const snap = await database().ref(`users/${user}`).once('value');
-            const profile = snap.val() || {};
-            const currentPoints = profile.points || 0;
-            await database().ref(`users/${user}`).update({points: points + 1});
+            await database().ref(`users/${uid}/points`).transaction((points) => {
+                return (points || 0 ) + pointsToAdd;
+            });
+            // setLog((prevLog) => [...prevLog, newEntry]);
+            // setPoints(points + pointsToAdd);
         }
         catch(e) {
             setError('Failed to submit activity. Please try again.');
         } finally {
             setLoading(false);
         }
+
+        
 
         // await database().ref(`users/${user}`).update({points: points + 1});
 

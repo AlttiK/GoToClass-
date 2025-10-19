@@ -32,6 +32,7 @@ export default function CreateAccount() {
         name: nameValue,
         email: emailValue,
         createdAt: database.ServerValue.TIMESTAMP,
+        groupId: groupId,
         points: 0,
     };
     if (groupId) 
@@ -46,6 +47,7 @@ export default function CreateAccount() {
         name: nameValue,
         email: emailValue,
         createdAt: database.ServerValue.TIMESTAMP,
+        groupId: groupId,
         points: 0,
       });
   };

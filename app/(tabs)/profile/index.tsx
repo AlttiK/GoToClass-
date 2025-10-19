@@ -3,15 +3,20 @@ import database from '@react-native-firebase/database';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Button, StyleSheet, Text, View } from 'react-native';
 
-export default function Index({ navigation }: any) {
+export default function Index() {
+  const [name, setName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [uid, setUid] = useState<string | null>(null);
   const [groupName, setGroupName] = useState<string | null>(null);
+  const [groupId, setGroupId] = useState<string | null>(null);
+  const [points, setPoints] = useState<number | null>(null);
+  const [joinCode, setJoinCode] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [loggingOut, setLoggingOut] = useState(false);
 
   useEffect(() => {
     let mounted = true;
+    let pointsRef: any = null;
     const loadProfile = async () => {
       try {
         const user = auth().currentUser;
@@ -19,16 +24,36 @@ export default function Index({ navigation }: any) {
           if (mounted) setLoading(false);
           return;
         }
-
+        
         setEmail(user.email);
         setUid(user.uid);
 
         const snap = await database().ref(`users/${user.uid}`).once('value');
         const profile = snap.val() || {};
+
+        const userGroupId = profile.groupId;
+        const userName = profile.name;
+        setName(userName);
+        setGroupId(userGroupId);
         
-        if (mounted) {
-          setGroupName(profile.groupName ?? null);
+        pointsRef = database().ref(`users/${user.uid}/points`);
+        pointsRef.on('value', (pointsSnap: any) => {
+          if (mounted) {
+            setPoints(pointsSnap.val() || 0);
+          }
+        });
+
+        // If user has a groupId, fetch group details from groups/{groupId}
+        if (userGroupId) {
+          const groupSnap = await database().ref(`groups/${userGroupId}`).once('value');
+          const groupData = groupSnap.val();
+          
+          if (groupData && mounted) {
+            setGroupName(groupData.name ?? null);
+            setJoinCode(groupData.joinCode ?? null);
+          }
         }
+
       } catch (e) {
         console.error('Failed to load profile', e);
       } finally {
@@ -37,7 +62,12 @@ export default function Index({ navigation }: any) {
     };
 
     loadProfile();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+      if (pointsRef) {
+        pointsRef.off('value');
+      }
+    };
   }, []);
 
   const handleLogOut = () => {
@@ -68,23 +98,24 @@ export default function Index({ navigation }: any) {
   return (
    <View>
         <Text>Profile</Text>
-      
       <View>
-        <Text>Email:</Text>
-        <Text>{email ?? 'Not available'}</Text>
+         <Text>Name: {name ?? 'Not available'}</Text>
+      </View>
+      <View>
+        <Text>Email: {email ?? 'Not available'}</Text>
       </View>
 
       <View>
-        <Text>User ID:</Text>
-        <Text>{uid ?? 'N/A'}</Text>
+        <Text>User ID: {uid ?? 'N/A'}</Text>
       </View>
 
       <View>
-        <Text >Group:</Text>
-        <Text>{groupName ?? 'None'}</Text>
+        <Text >Group: {groupName ?? 'None'}</Text>
+        <Text>Join Code: {joinCode ?? 'None'}</Text>
       </View>
+
         {/* include tasks accomplished later */}
-        <Text>Points Earned: </Text> 
+        <Text>Points Earned: {points}</Text> 
         {/* include points earned later */}
       <View>
         {loggingOut ? (
