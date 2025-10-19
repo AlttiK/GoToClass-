@@ -3,8 +3,7 @@ import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const styles= StyleSheet.create({
   center:{
@@ -21,7 +20,7 @@ const styles= StyleSheet.create({
     padding:25,
   },
   button: {
-    marginTop: 20,
+    marginTop: 5,
     backgroundColor: '#0454F1',
     height: 40,
     borderRadius: 5,
@@ -41,10 +40,10 @@ const styles= StyleSheet.create({
     marginTop: 10,
 }, 
 component: {
-    marginTop: 5,
+    marginTop: 2,
 },
 slider: {
-    height: 7
+    height: 2
 }, 
 spacer: {
     marginTop: 5,
@@ -55,7 +54,7 @@ smallbox: {
     borderWidth: 2,
     borderColor: '#0454F1',
     flexDirection: 'column',
-    padding: 10,
+    padding: 5,
     marginTop: 2,
 }, 
 tiny: {
@@ -84,7 +83,6 @@ export default function Index({ navigation }: any, user: any) {
     }, []);
 
     const submitPress = async () => {
-
         if(time === 0) {
             Alert.alert('Error', 'Please set a time greater than 0');
             return;
@@ -118,7 +116,7 @@ export default function Index({ navigation }: any, user: any) {
 
     };
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <Text style={styles.header}>Input log</Text>
             <Text style={styles.container}>
                 Choose the activity you participated in:
@@ -143,7 +141,6 @@ export default function Index({ navigation }: any, user: any) {
                 minimumTrackTintColor='#0a1e45'
                 maximumTrackTintColor='#0a1e45'
                 thumbTintColor='#0a1e45'>
-
             </Slider>
             <Text style={styles.spacer}>
                 {time} hours
@@ -159,8 +156,8 @@ export default function Index({ navigation }: any, user: any) {
                 Completed:
             </Text>
             {log.map((entry, index) => (
-                <View style={styles.smallbox}>
-                    <Text key={index} style={styles.tiny}>{entry}</Text>
+                <View key={index} style={styles.smallbox}>
+                    <Text style={styles.tiny}>{entry}</Text>
                 </View>
             ))}
 
@@ -170,7 +167,7 @@ export default function Index({ navigation }: any, user: any) {
                 <Button title="Leaderboard" onPress={() => navigation.navigate('Leader')}/>
                 <Button title="Profile" onPress={() => navigation.navigate('Profile')}/>
             </View> */}
-        </ScrollView>
+        </View>
     );
 
     // let onPressReturn = (
