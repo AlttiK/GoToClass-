@@ -2,7 +2,7 @@ import Slider from '@react-native-community/slider';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { Picker } from '@react-native-picker/picker';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
@@ -76,9 +76,14 @@ export default function Index({ navigation }: any, user: any) {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
-    const submitPress = async () => {
-        user = auth().currentUser;
+    useEffect(() => {
+        const user = auth().currentUser;
+        if (user) {
         setUid(user.uid);
+        }
+    }, []);
+
+    const submitPress = async () => {
 
         if(time === 0) {
             Alert.alert('Error', 'Please set a time greater than 0');
