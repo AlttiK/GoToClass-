@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "647811897001",
+    "firebase_url": "https://gotoclass-e972a-default-rtdb.firebaseio.com",
+    "project_id": "gotoclass-e972a",
+    "storage_bucket": "gotoclass-e972a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647811897001:android:35fbf49be8fd4a98ccfbb8",
+        "android_client_info": {
+          "package_name": "com.gotoclass.gotoclass"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk2jRL6XXLcmCFoCxdwz7yuaREoBgQLqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
