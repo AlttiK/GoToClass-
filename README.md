@@ -1,50 +1,25 @@
-# Welcome to your Expo app 👋
+# Go To Class!
+College students skip class all the time. Why not make it a competition between friends on who has the best attendance? Go To Class! is the class attendance leaderboard for your entire friend group.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Inspiration
+We are always skipping class for no reason, even though we know we should not.
 
-## Get started
+## What it does
+A weekly leaderboard with your friends scoring your class attendance, studying, etc.
 
-1. Install dependencies
+## How we built it
+We used Expo React Native for the app and a Firebase server for the backend. 
 
-   ```bash
-   npm install
-   ```
+## Challenges we ran into
+Getting the server set up and actually working with logins and inputs.
 
-2. Start the app
+## Accomplishments that we're proud of
+Debugging lots of server issues with authentication. 
+Learning a lot of new React Native packages.
 
-   ```bash
-   npx expo start
-   ```
+## What we learned
+A lot about the nuances with database setup design, as well as app project layout and efficiency.
 
-In the output, you'll find options to open the app in a
+## What's next for Go To Class!
+Build off of the MVP and add the ability to sabotage friends if they skip class, multipliers for streaks, weekly rewards, and real location tracking to enforce attendance.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
