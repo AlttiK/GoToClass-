@@ -11,13 +11,16 @@ const styles= StyleSheet.create({
   container:{
     flex:1,
     padding:25,
-  }
+  },
+  buttonStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+}
   
 });
 
 
-
-export default function Index() {
+export default function Index(navigation: any) {
     const [activity, setActivity] = useState('Class');
     const [time, setTime] = useState(0);
     const [log, setLog] = useState<string[]>([]);
@@ -61,6 +64,13 @@ export default function Index() {
             <Button
                 title="Submit"
                 onPress={submitPress}/>
+
+            <View style={styles.buttonStyle}>
+                <Button title="Home" onPress={() => navigation.navigate('Home')}/>
+                <Button title="Input" onPress={() => navigation.navigate('Input')}/>
+                <Button title="Leaderboard" onPress={() => navigation.navigate('Leader')}/>
+                <Button title="Profile" onPress={() => navigation.navigate('Profile')}/>
+            </View>
         </View>
     );
 

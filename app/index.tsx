@@ -32,7 +32,7 @@ export default function Index() {
               onPress={toggleCreateLoginModel}/>
             <Modal isVisible={isLoginModalVisible}>
               <View>
-                <LoginScreen/>
+                <LoginScreen navigation={undefined}/>
                 <View>
                   <Button title="Close" onPress={toggleLoginModal} />
                 </View>
@@ -40,7 +40,7 @@ export default function Index() {
             </Modal>
             <Modal isVisible={isCreateLoginModalVisible}>
               <View>
-                <CreateAccount/>
+                <CreateAccount navigation={undefined}/>
                 <View>
                   <Button title="Close" onPress={toggleCreateLoginModel} />
                 </View>

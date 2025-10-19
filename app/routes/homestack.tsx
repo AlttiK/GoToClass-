@@ -1,16 +1,16 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import LogIn from '../app/_layout';
-import Home from '../app/home/activityDetail';
-import Input from '../app/input/InputClass';
-import Leader from '../app/leaderboard/leaderboard';
-import Profile from '../app/profile/profile';
+import LogIn from '../_layout';
+import Home from '../home/activityDetail';
+import Input from '../input/InputClass';
+import Leader from '../leaderboard/leaderboard';
+import Profile from '../profile/profile';
 
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+export default function Navigate() {
     return (
         <NavigationContainer>
             <Stack.Navigator>

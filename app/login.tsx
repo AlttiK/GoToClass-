@@ -1,9 +1,10 @@
 import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, Button, TextInput, View } from 'react-native';
+import { ActivityIndicator, Button, TextInput, View } from 'react-native';
 
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }: {navigation: any}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -13,9 +14,21 @@ const LoginScreen = () => {
         setError(null);
         setLoading(true);
         try {
-            await auth().signInWithEmailAndPassword(email.trim(), password);
-            Alert.alert('Success', 'Logged In.');
-            // navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+            const loginInfo = await auth().signInWithEmailAndPassword(email.trim(), password);
+            const uid = loginInfo.user.uid;
+
+            const snap = await database().ref(`users/${uid}`).once('value');
+            const profile = snap.val() || {};
+            const groupId = profile.groupId ?? null;
+            const groupName = profile.groupName ?? null;
+            navigation.reset({ 
+                index: 0, 
+                routes: [{ name: 'Home', params: { 
+                    uid, 
+                    groupId, 
+                    groupName 
+                }}] 
+            });
         } catch (e: any) {
         const code = e?.code || '';
             if (code === 'auth/user-not-found' || code === 'auth/wrong-password') {
