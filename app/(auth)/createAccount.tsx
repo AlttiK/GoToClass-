@@ -26,10 +26,11 @@ export default function CreateAccount() {
   const [groupName, setGroupName] = useState('');
   const [joinCode, setJoinCode] = useState('');
 
-  const createProfile = async (uid: string, emailValue: string, groupId?: string, group?: string, code?: string) => {
+  const createProfile = async (uid: string, emailValue: string, groupId?: string, group?: string, code?: string, points?: number) => {
     const update: any = {
         email: emailValue,
         createdAt: database.ServerValue.TIMESTAMP,
+        points: 0,
     };
     if (groupId) 
         update.groupId = groupId;
@@ -42,6 +43,7 @@ export default function CreateAccount() {
       .set({
         email: emailValue,
         createdAt: database.ServerValue.TIMESTAMP,
+        points: 0,
       });
   };
 
@@ -60,6 +62,7 @@ export default function CreateAccount() {
       joinCode: code,
       owner: ownerUid,
       createdAt: database.ServerValue.TIMESTAMP,
+      points: 0,
     });
 
     await database().ref(`groups/${groupId}/members/${ownerUid}`).set(true);
@@ -144,11 +147,6 @@ export default function CreateAccount() {
         setGroupName('');
         setJoinCode('');
         Alert.alert('Success', 'Account created.');
-
-        router.push({
-          pathname: '/(tabs)/home',
-          params: { uid, groupId: finalGroupId, groupName: finalGroupName }
-      });
     } 
     catch (error: any) {
         const code = error?.code || '';

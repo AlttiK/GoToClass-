@@ -10,7 +10,7 @@ const LoginScreen = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-
+    
     const handleSignIn = async () => {
         setError(null);
         setLoading(true);
@@ -23,10 +23,6 @@ const LoginScreen = () => {
             const groupId = profile.groupId ?? null;
             const groupName = profile.groupName ?? null;
             
-            router.replace({
-                pathname: "/(tabs)/home/Home",
-                params: { uid, groupId, groupName }
-            });
         } catch (e: any) {
         const code = e?.code || '';
             if (code === 'auth/user-not-found' || code === 'auth/wrong-password') {

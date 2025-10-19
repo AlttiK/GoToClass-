@@ -4,13 +4,14 @@ import Modal from 'react-native-modal';
 import CreateAccount from './createAccount';
 import LoginScreen from './login';
 
+
 const styles= StyleSheet.create({
   center:{
     alignItems: 'center',
   },
 });
 
-export default function Welcome({ navigation }: any ) {
+export default function Index() {
     const [isLoginModalVisible, setIsLoginModalVisible] = React.useState(false);
     const [isCreateLoginModalVisible, setIsCreateLoginModalVisible] = React.useState(false);
     const toggleLoginModal = () => {
